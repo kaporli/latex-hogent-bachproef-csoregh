@@ -15,70 +15,136 @@
 \section{Inleiding}%
 \label{sec:inleiding}
 
-Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+Het thema van deze bachelorproef is het vergelijken van verschillende self-hosted Large Language Models (LLMs) om hun geschiktheid voor het ondersteunen van codeertaken binnen bedrijfsomgevingen te bepalen. Met de toenemende afhankelijkheid van bedrijven van AI voor programmeerhulp, groeit ook de bezorgdheid over de veiligheid van gevoelige gegevens. Cloudgebaseerde modellen zoals ChatGPT of Gemini brengen het risico met zich mee dat bedrijfsgevoelige code wordt opgenomen in trainingssets, wat kan leiden tot datalekken. Voor bedrijven die data-privacy als prioriteit zien, bieden self-hosted LLMs een mogelijk veilig alternatief.  
 
-\begin{itemize}
-  \item kaderen thema
-  \item de doelgroep
-  \item de probleemstelling en (centrale) onderzoeksvraag
-  \item de onderzoeksdoelstelling
-\end{itemize}
+De onderzoeksvraag luidt: 
 
-Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
+\begin{quote} 
+  "Welke self-hosted LLM biedt de beste ondersteuning voor codeertaken binnen bedrijven, terwijl de risico's op datalekken worden geminimaliseerd?" 
+\end{quote}
 
-De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
+Het doel van dit onderzoek is om bedrijven een objectieve evaluatie te bieden van de prestaties, nauwkeurigheid, efficiëntie en gebruiksvriendelijkheid van geselecteerde open-source LLMs, zoals StarCoder en Mistral. Hierbij worden modellen getest met behulp van gestandaardiseerde benchmarks, zoals HumanEval en MBPP, in een gecontroleerde self-hosted omgeving.  
 
-Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
-
-Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
+Dit onderzoek beoogt bedrijven praktische aanbevelingen te geven over welke modellen het meest geschikt zijn voor veilige en efficiënte AI-integratie in hun ontwikkelprocessen, waarbij innovatie mogelijk blijft zonder de veiligheid van gevoelige gegevens in gevaar te brengen.
 
 %---------- Stand van zaken ---------------------------------------------------
 
 \section{Literatuurstudie}%
 \label{sec:literatuurstudie}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
+De snelle ontwikkeling van Large Language Models (LLMs) heeft geleid tot brede toepassingen in domeinen zoals tekstgeneratie, vertaling en programmeerassistentie. Traditioneel worden deze modellen gehost in cloudomgevingen, zoals bij OpenAI's ChatGPT en Google's Gemini, wat aanzienlijke voordelen biedt op het gebied van schaalbaarheid en onderhoud. Echter, de vraag naar self-hosted alternatieven groeit snel, vooral in sectoren waar data-privacy en controle over gevoelige gegevens cruciaal zijn. Cloudgebaseerde oplossingen brengen namelijk het risico met zich mee dat gebruikersdata – zoals bedrijfsgevoelige code – wordt opgenomen in trainingsdatasets of anderszins wordt opgeslagen \autocite{Brown2020}.
 
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
+Self-hosted LLMs bieden een oplossing voor dit probleem door bedrijven volledige controle te geven over de opslag en verwerking van data. Modellen zoals StarCoder, ontwikkeld door Hugging Face, en Mistral, een compact maar krachtige open-source model, zijn specifiek ontworpen om lokaal te worden ingezet en richten zich op efficiëntie en gebruiksvriendelijkheid \autocite{Tunstall2023, Team2023}. StarCoder is geoptimaliseerd voor codeertaken en ondersteunt meerdere programmeertalen, wat het geschikt maakt voor bredere toepassingen in softwareontwikkeling \autocite{Li2022}. Mistral daarentegen biedt een uitstekende balans tussen prestaties en hardwarevereisten, wat belangrijk is voor bedrijven die niet over uitgebreide infrastructuur beschikken \autocite{Mistral2023}.
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
+Eerdere studies hebben benchmarks zoals HumanEval en MBPP gebruikt om de prestaties van LLMs op programmeergerelateerde taken te evalueren \autocite{Chen2021}. Deze benchmarks testen de nauwkeurigheid van codegeneratie en probleemoplossend vermogen op basis van gestandaardiseerde datasets. Bevindingen tonen aan dat modellen zoals OpenAI Codex indrukwekkende resultaten behalen in specifieke contexten, maar de afhankelijkheid van cloudhosting blijft een grote zorg voor bedrijven \autocite{Chen2021, Brown2020}. Dit heeft geleid tot een groeiende interesse in zelf-gehoste alternatieven, hoewel er nog weinig systematisch onderzoek is uitgevoerd naar hoe deze modellen presteren in een bedrijfscontext.
 
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
+Een open vraag in het domein is hoe self-hosted LLMs zich verhouden tot cloudgebaseerde modellen, niet alleen op het gebied van prestaties, maar ook in termen van integratiegemak en resourcegebruik. Hoewel er case studies zijn die enkele aspecten van self-hosted modellen belichten, zoals hun hardwarevereisten \autocite{Rao2023}, blijft er een gebrek aan uitgebreide evaluaties die zich richten op de praktische toepasbaarheid binnen bedrijfsomgevingen.
 
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
-
-% Voor literatuurverwijzingen zijn er twee belangrijke commando's:
-% \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
-%   geen onderdeel is van de zin.
-% \textcite{KEY} => Auteur (jaartal)  Gebruik dit als de auteursnaam wel een
-%   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
-%   ...'')
-
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
+Dit onderzoek vult deze leegte door een systematische evaluatie te bieden van self-hosted LLMs met een focus op gebruik in bedrijven. In tegenstelling tot eerdere studies, die zich voornamelijk richten op prestaties op academische benchmarks, zal deze studie ook aspecten zoals implementatiegemak, veiligheid en compatibiliteit met bestaande workflows beoordelen. Hierdoor wordt niet alleen inzicht gegeven in de technische mogelijkheden van self-hosted LLMs, maar wordt ook een praktische handleiding geboden voor bedrijven die overwegen deze technologie te adopteren.
 
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}%
 \label{sec:methodologie}
 
-Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
+Het onderzoek zal worden uitgevoerd als een vergelijkende studie waarbij verschillende self-hosted Large Language Models (LLMs) systematisch worden geëvalueerd op basis van hun prestaties en geschiktheid voor gebruik in bedrijfsomgevingen. De gekozen onderzoekstechnieken zijn experimenten en literatuurstudie, gecombineerd met een Proof of Concept (PoC) om de praktische toepasbaarheid van de modellen te testen. Het doel is om objectieve, meetbare resultaten te verkrijgen die bedrijven kunnen helpen bij het selecteren van een model dat voldoet aan hun vereisten voor code-assistentie en datalekpreventie.
 
-Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
+\subsection{Onderzoekstechnieken en stappen}
 
-Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
+\begin{enumerate}
+    \item \textbf{Literatuurstudie}
+    \begin{itemize}
+        \item Een grondige analyse van de huidige stand van zaken rond self-hosted LLMs en bestaande benchmarks voor codeertaken, zoals HumanEval en MBPP \autocite{Chen2021}.
+        \item Het identificeren van geschikte modellen, zoals StarCoder en Mistral, en hun technische vereisten en sterke punten.
+    \end{itemize}
 
-Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
+    \item \textbf{Modelselectie en installatie}
+    \begin{itemize}
+        \item Selectie van 3-5 self-hosted LLMs op basis van literatuur en beschikbaarheid.
+        \item Installatie van de modellen in een gecontroleerde testomgeving, gebruikmakend van hardware zoals GPU-clusters (bijvoorbeeld NVIDIA A100 of soortgelijke servers) en software-infrastructuur zoals Docker en Kubernetes voor modelhosting.
+    \end{itemize}
 
-Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
+    \item \textbf{Ontwikkeling van benchmarks en testcases}
+    \begin{itemize}
+        \item Samenstellen van een set programmeerproblemen in verschillende talen en moeilijkheidsgraden, gebaseerd op bestaande benchmarks zoals HumanEval.
+        \item Ontwikkelen van testcases om specifieke prestatie-indicatoren te meten, zoals codegeneratienauwkeurigheid, responstijd en resourcegebruik.
+    \end{itemize}
 
-Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
+    \item \textbf{Experimenten uitvoeren}
+    \begin{itemize}
+        \item Testen van de modellen onder identieke omstandigheden.
+        \item Verzamelen van meetbare data, zoals de gemiddelde tijd om een probleem op te lossen, de foutmarge in de gegenereerde code en het gebruik van systeembronnen.
+        \item Veiligheidsanalyse van de modellen, inclusief een controle op data-uitwisseling en logging om te verifiëren dat gegevens niet extern worden opgeslagen.
+    \end{itemize}
+
+    \item \textbf{Proof of Concept (PoC)}
+    \begin{itemize}
+        \item Integratie van een geselecteerd model in een eenvoudige ontwikkelworkflow (bijvoorbeeld een lokaal geïnstalleerde IDE zoals Visual Studio Code met AI-plug-ins).
+        \item Evaluatie van het gebruiksgemak en de impact op de ontwikkelsnelheid en -kwaliteit in een praktijkgerichte context.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Tools en technologieën}
+
+\begin{itemize}
+    \item \textbf{Hardware:} NVIDIA GPU’s (bij voorkeur A100 of H100 voor optimale prestaties), lokale servers of een on-premises datacenter.
+    \item \textbf{Software:} Docker, Kubernetes, Python, en tooling voor benchmarking zoals OpenAI’s evaluation scripts \autocite{Brown2020}.
+    \item \textbf{Benchmarks:} HumanEval, MBPP, en eventueel aangepast voor specifieke bedrijfsomgevingen.
+\end{itemize}
+
+\subsection{Tijdschatting en deliverables}
+
+\begin{itemize}
+    \item \textbf{Literatuurstudie en modelselectie} (3 weken)  
+    Deliverable: Overzicht van relevante LLMs en benchmarks, inclusief een korte vergelijking op basis van theoretische sterktes en vereisten.
+
+    \item \textbf{Modelimplementatie en testomgeving opzetten} (4 weken)  
+    Deliverable: Werkende self-hosted implementaties van geselecteerde modellen.
+
+    \item \textbf{Ontwikkeling en validatie van benchmarks} (2 weken)  
+    Deliverable: Een set gestandaardiseerde testcases en een geconfigureerde testomgeving.
+
+    \item \textbf{Uitvoeren van experimenten} (4 weken)  
+    Deliverable: Data en grafieken met prestatie-indicatoren en vergelijkingen.
+
+    \item \textbf{Proof of Concept} (2 weken)  
+    Deliverable: Werkende integratie van een LLM in een lokale ontwikkelworkflow, inclusief documentatie en bevindingen.
+
+    \item \textbf{Analyse en rapportage} (3 weken)  
+    Deliverable: Eindrapport met aanbevelingen en conclusie.
+\end{itemize}
+
+De totale geschatte duur van het onderzoek is 18 weken. Hiermee wordt voldaan aan de technische diepgang en de vereiste tijdsinvestering voor een bachelorproef in informatica.
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
+\subsection{Verwacht resultaat}
 
-Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
+Het onderzoek zal resulteren in een systematische evaluatie van self-hosted Large Language Models (LLMs) zoals StarCoder en Mistral op basis van hun prestaties en geschiktheid voor code-assistentie in bedrijfsomgevingen. De verwachte resultaten omvatten:
 
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
+\begin{itemize}
+    \item \textbf{Prestaties:} Een gedetailleerde vergelijking van de modellen op basis van metrics zoals:
+    \begin{itemize}
+        \item Codegeneratienauwkeurigheid (correctheid van de gegenereerde code).
+        \item Responstijd (in seconden) voor verschillende programmeerproblemen.
+        \item Resourcegebruik (GPU-geheugen, CPU-gebruik).
+    \end{itemize}
 
+    \item \textbf{Veiligheid:} Bevestiging dat self-hosted modellen geen data opslaan of externe verbindingen maken tijdens het uitvoeren van code-assistentie.
+
+    \item \textbf{Praktische toepasbaarheid:} Een beoordeling van hoe eenvoudig deze modellen kunnen worden geïntegreerd in een typische ontwikkelworkflow, inclusief hun compatibiliteit met tools zoals Visual Studio Code of JetBrains IDE's.
+
+    \item \textbf{Benchmarkresultaten:} Gevisualiseerde data zoals mock-up grafieken:
+    \begin{itemize}
+        \item Een staafdiagram dat de nauwkeurigheid per model weergeeft op verschillende programmeertaken.
+        \item Een lijngrafiek die de responstijd vergelijkt bij het oplossen van problemen met oplopende complexiteit.
+        \item Een spreidingsdiagram van het resourcegebruik tegenover de modelprestaties.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Conclusie}
+
+De verwachting is dat StarCoder beter presteert op complexere programmeerproblemen vanwege de focus op codeertaken in de training, terwijl Mistral meer geschikt blijkt voor resource-efficiënte omgevingen door zijn kleinere modelgrootte en lagere hardwarevereisten. Beide modellen worden als geschikte kandidaten gezien voor specifieke bedrijfscontexten, afhankelijk van de prioriteit op nauwkeurigheid of kosten.
+
+De meerwaarde van dit onderzoek ligt in het bieden van een concrete handleiding aan bedrijven die op zoek zijn naar veilige en efficiënte AI-oplossingen voor programmeerhulp. Dit helpt organisaties bij het maken van een weloverwogen keuze en ondersteunt de adoptie van self-hosted LLMs zonder datalekrisico’s. Hierdoor kunnen bedrijven innovatie en dataveiligheid combineren in hun ontwikkelprocessen. Eventuele afwijkingen van de hypothese, zoals onverwacht betere prestaties van een model of integratieproblemen, zullen nader worden onderzocht om een dieper inzicht te krijgen in de praktische toepasbaarheid van deze technologie.
