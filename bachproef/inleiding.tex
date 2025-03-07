@@ -5,33 +5,31 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
-
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
+As artificial intelligence (AI) rapidly advances, AI-powered coding assistants have become increasingly prevalent due to their capacity to significantly enhance productivity, efficiency, and developer workflows. Notably, transformer-based Large Language Models (LLMs), such as OpenAI's Codex and GitHub Copilot, have demonstrated a remarkable ability to generate code, interpret natural language prompts, and substantially accelerate coding tasks. Developers leveraging these tools report substantial productivity gains, including reduced mental load from repetitive coding tasks and enhanced workflow efficiency. Despite these benefits, the widespread adoption of cloud-based AI coding assistants by enterprises has been constrained primarily due to data security and privacy concerns.
+Recent incidents have underscored the critical risks associated with cloud-hosted AI assistants. Samsung's 2023 decision to prohibit employee use of cloud-based AI tools arose after a sensitive internal source code leak occurred via an external AI model, highlighting vulnerabilities in how user data is stored and managed externally \autocite{KoreaHerald2023}. Similarly, major financial institutions like JPMorgan Chase and Goldman Sachs have proactively restricted the usage of such cloud-based services to mitigate regulatory and confidentiality risks. These incidents underscore the potential for inadvertent data exposure, compliance violations, and loss of intellectual property control associated with external AI deployments.
+In light of these pressing concerns, one potential solution for enterprises is the deployment of self-hosted Large Language Models (LLMs) for secure coding assistance, running these models internally within their infrastructure. Self-hosted LLMs could enhance data privacy and compliance by ensuring operations remain entirely within the organization's environment, eliminating reliance on external services. However, this approach introduces new complexities, including integration challenges, computational resource demands, and ensuring secure, reliable operations within enterprise infrastructure.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+A central concern driving hesitation among enterprises regarding cloud-based AI coding assistants involves the uncertainty surrounding data handling practices. Enterprises worry that their proprietary code or sensitive information could inadvertently become training data, accessible to external entities. Although prominent services like ChatGPT and Google's Gemini provide the ability to disable user data retention, these options require proactive action from users and may not fully mitigate data security risks. Consequently, enterprises face ambiguity regarding their data exposure, reinforcing a cautious stance toward cloud-based AI coding tools.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+Which self-hosted LLMs offer the best support for coding tasks while minimizing data leakage risks?
+
+\begin{itemize}
+  \item Can self-hosted LLMs reliably assist in secure software development without introducing vulnerabilities?
+  \item How does the performance of self-hosted LLMs compare to cloud-based AI tools in coding tasks?
+  \item What are the deployment challenges and resource requirements of running LLMs locally?
+  \item What best practices should organizations follow when integrating self-hosted AI coding assistants?
+\end{itemize}
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
-
+The main objective of this research is to thoroughly analyze and evaluate locally hosted machine learning models for coding assistance, assessing their effectiveness, robustness, and suitability compared to cloud-based alternatives. This study specifically investigates the capabilities of self-hosted models in handling coding tasks, emphasizing scenarios where sensitive or proprietary data protection is critical. Through a structured benchmarking and comparative approach, the research aims to provide enterprises with clear insights into the advantages, limitations, and practical considerations of adopting local models over cloud-based solutions. Ultimately, this analysis offers guidance for enterprise decision-makers on whether investing resources into self-hosting machine learning models aligns with their strategic priorities regarding data privacy, security, and operational efficiency.
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
 
@@ -39,12 +37,12 @@ Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor suc
 % geven van de opbouw van de rest van de tekst. Deze sectie bevat al een aanzet
 % die je kan aanvullen/aanpassen in functie van je eigen tekst.
 
-De rest van deze bachelorproef is als volgt opgebouwd:
+The remainder of this bachelor's thesis is structured as follows:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
+Chapter~\ref{ch:stand-van-zaken} provides an overview of the current state of research in the field, based on a literature review.
 
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
+Chapter~\ref{ch:methodologie} explains the methodology and discusses the research techniques used to address the research questions.
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+Finally, Chapter~\ref{ch:conclusie} presents the conclusion, answering the research questions, and also outlines avenues for future research within this domain.

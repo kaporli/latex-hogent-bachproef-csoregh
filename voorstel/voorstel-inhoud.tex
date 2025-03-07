@@ -15,87 +15,128 @@
 \section{Inleiding}%
 \label{sec:inleiding}
 
-Het thema van deze bachelorproef is het vergelijken van verschillende self-hosted Large Language Models (LLMs) om hun geschiktheid voor het ondersteunen van codeertaken binnen bedrijfsomgevingen te bepalen. Met de toenemende afhankelijkheid van bedrijven van AI voor programmeerhulp, groeit ook de bezorgdheid over de veiligheid van gevoelige gegevens. Cloudgebaseerde modellen zoals ChatGPT of Gemini brengen het risico met zich mee dat bedrijfsgevoelige code wordt opgenomen in trainingssets, wat kan leiden tot datalekken. Voor bedrijven die data-privacy als prioriteit zien, bieden self-hosted LLMs een mogelijk veilig alternatief.  
+Het thema van deze bachelorproef is het vergelijken van verschillende self-hosted Large Language Models (LLMs) om hun geschiktheid voor het ondersteunen van codeertaken binnen bedrijfsomgevingen te bepalen. Met de toenemende afhankelijkheid van bedrijven van AI voor programmeerhulp groeit ook de bezorgdheid over de veiligheid van gevoelige gegevens. Cloudgebaseerde modellen zoals ChatGPT of Gemini brengen het risico met zich mee dat bedrijfsgevoelige code wordt opgenomen in trainingssets, wat kan leiden tot datalekken. Voor bedrijven die data-privacy als prioriteit zien, bieden self-hosted LLMs een mogelijk veilig alternatief.
 
-De onderzoeksvraag luidt: 
+De onderzoeksvraag luidt:
 
-\begin{quote} 
-  "Welke self-hosted LLM biedt de beste ondersteuning voor codeertaken binnen bedrijven, terwijl de risico's op datalekken worden geminimaliseerd?" 
-\end{quote}
+"Welke self-hosted LLM biedt de beste ondersteuning voor codeertaken binnen bedrijven, terwijl de risico’s op datalekken worden geminimaliseerd?"
 
-Het doel van dit onderzoek is om bedrijven een objectieve evaluatie te bieden van de prestaties, nauwkeurigheid, efficiëntie en gebruiksvriendelijkheid van geselecteerde open-source LLMs, zoals StarCoder en Mistral. Hierbij worden modellen getest met behulp van gestandaardiseerde benchmarks, zoals HumanEval en MBPP, in een gecontroleerde self-hosted omgeving.  
+Om deze vraag te beantwoorden, worden de volgende deelvragen geformuleerd:
 
-Dit onderzoek beoogt bedrijven praktische aanbevelingen te geven over welke modellen het meest geschikt zijn voor veilige en efficiënte AI-integratie in hun ontwikkelprocessen, waarbij innovatie mogelijk blijft zonder de veiligheid van gevoelige gegevens in gevaar te brengen.
+\begin{enumerate}
+    \item Welke benchmarks zijn het meest geschikt om de prestaties van self-hosted LLMs te evalueren?
+
+    \item Wat zijn de hardware- en softwarevereisten voor de implementatie van self-hosted LLMs?
+
+    \item Hoe presteren de geselecteerde modellen op het gebied van nauwkeurigheid, responstijd en resourcegebruik?
+
+    \item Hoe eenvoudig zijn self-hosted LLMs te integreren in bestaande ontwikkelworkflows?
+
+\end{enumerate}
+
+Het doel van dit onderzoek is om bedrijven een objectieve evaluatie te bieden van de prestaties, nauwkeurigheid, efficiëntie en gebruiksvriendelijkheid van geselecteerde open-source LLMs, zoals StarCoder en Mistral. Hierbij worden modellen getest met behulp van gestandaardiseerde benchmarks, zoals HumanEval en MBPP, in een gecontroleerde self-hosted omgeving.
 
 %---------- Stand van zaken ---------------------------------------------------
 
 \section{Literatuurstudie}%
 \label{sec:literatuurstudie}
 
-De snelle ontwikkeling van Large Language Models (LLMs) heeft geleid tot brede toepassingen in domeinen zoals tekstgeneratie, vertaling en programmeerassistentie. Traditioneel worden deze modellen gehost in cloudomgevingen, zoals bij OpenAI's ChatGPT en Google's Gemini, wat aanzienlijke voordelen biedt op het gebied van schaalbaarheid en onderhoud. Echter, de vraag naar self-hosted alternatieven groeit snel, vooral in sectoren waar data-privacy en controle over gevoelige gegevens cruciaal zijn. Cloudgebaseerde oplossingen brengen namelijk het risico met zich mee dat gebruikersdata – zoals bedrijfsgevoelige code – wordt opgenomen in trainingsdatasets of anderszins wordt opgeslagen \autocite{Brown2020}.
+De snelle ontwikkeling van Large Language Models (LLMs) heeft geleid tot brede toepassingen in uiteenlopende domeinen, variërend van tekstgeneratie en vertaling tot programmeerassistentie. Traditioneel zijn deze modellen in cloudomgevingen gehost, zoals bij OpenAI's ChatGPT en het binnenkort beschikbare Gemini van Google. Deze cloudgebaseerde oplossingen bieden aanzienlijke voordelen op het gebied van schaalbaarheid, onderhoud en directe toegankelijkheid \autocite{Brown2020}. Toch groeit de vraag naar self-hosted alternatieven snel, vooral binnen bedrijven die waarde hechten aan dataprivacy en volledige controle over hun infrastructuur. Een belangrijk aandachtspunt hierbij is het risico dat bedrijfsgevoelige data – inclusief broncode en intellectueel eigendom – onbedoeld terechtkomt in externe trainingsdatasets of op systemen buiten de eigen controle \autocite{Rao2023}.
 
-Self-hosted LLMs bieden een oplossing voor dit probleem door bedrijven volledige controle te geven over de opslag en verwerking van data. Modellen zoals StarCoder, ontwikkeld door Hugging Face, en Mistral, een compact maar krachtige open-source model, zijn specifiek ontworpen om lokaal te worden ingezet en richten zich op efficiëntie en gebruiksvriendelijkheid \autocite{Tunstall2023, Team2023}. StarCoder is geoptimaliseerd voor codeertaken en ondersteunt meerdere programmeertalen, wat het geschikt maakt voor bredere toepassingen in softwareontwikkeling \autocite{Li2022}. Mistral daarentegen biedt een uitstekende balans tussen prestaties en hardwarevereisten, wat belangrijk is voor bedrijven die niet over uitgebreide infrastructuur beschikken \autocite{Mistral2023}.
+Self-hosted LLMs proberen deze uitdagingen aan te pakken door bedrijven in staat te stellen de modellen lokaal, of op hun eigen servers, te draaien. Hierdoor behouden organisaties de regie over de opslag en verwerking van hun data en minimaliseren zij het risico op datalekken. Modellen zoals StarCoder, ontwikkeld door Hugging Face, en Mistral, een compact maar krachtig open-source model, zijn specifiek ontworpen met deze doelstellingen voor ogen. StarCoder richt zich met name op codeertaken en ondersteunt meerdere programmeertalen, waardoor het een brede inzetbaarheid kent in softwareontwikkelingsteams \autocite{Li2022, Tunstall2023}. Mistral is daarentegen geoptimaliseerd voor efficiëntie en lagere hardwarevereisten, wat het aantrekkelijk maakt voor bedrijven met beperktere infrastructuur \autocite{Mistral2023, Team2023}.
 
-Eerdere studies hebben benchmarks zoals HumanEval en MBPP gebruikt om de prestaties van LLMs op programmeergerelateerde taken te evalueren \autocite{Chen2021}. Deze benchmarks testen de nauwkeurigheid van codegeneratie en probleemoplossend vermogen op basis van gestandaardiseerde datasets. Bevindingen tonen aan dat modellen zoals OpenAI Codex indrukwekkende resultaten behalen in specifieke contexten, maar de afhankelijkheid van cloudhosting blijft een grote zorg voor bedrijven \autocite{Chen2021, Brown2020}. Dit heeft geleid tot een groeiende interesse in zelf-gehoste alternatieven, hoewel er nog weinig systematisch onderzoek is uitgevoerd naar hoe deze modellen presteren in een bedrijfscontext.
+Eerdere studies hebben al laten zien dat benchmarks zoals HumanEval en MBPP waardevol zijn om de codegeneratieprestaties van LLMs te meten \autocite{Chen2021}. Deze benchmarks testen niet alleen de nauwkeurigheid van de gegenereerde code, maar ook het probleemoplossend vermogen van de modellen in gestandaardiseerde scenario’s. Tot nu toe lag de focus daarbij voornamelijk op cloudgebaseerde oplossingen, zoals OpenAI Codex, die indrukwekkende resultaten hebben laten zien. Echter, het gebrek aan vergelijkend onderzoek naar self-hosted alternatieven en hun toepasbaarheid in een bedrijfsomgeving blijft een belangrijke leemte in de literatuur.
 
-Een open vraag in het domein is hoe self-hosted LLMs zich verhouden tot cloudgebaseerde modellen, niet alleen op het gebied van prestaties, maar ook in termen van integratiegemak en resourcegebruik. Hoewel er case studies zijn die enkele aspecten van self-hosted modellen belichten, zoals hun hardwarevereisten \autocite{Rao2023}, blijft er een gebrek aan uitgebreide evaluaties die zich richten op de praktische toepasbaarheid binnen bedrijfsomgevingen.
+Deze leemte wordt nog duidelijker wanneer men de praktische aspecten van de implementatie van self-hosted modellen in beschouwing neemt. Hoewel er case studies zijn die bepaalde technische aspecten en resourcevereisten van self-hosted LLMs belichten \autocite{Rao2023}, blijft er een gebrek aan systematische evaluaties die niet alleen prestaties, maar ook integratiegemak, veiligheid en compatibiliteit met bestaande ontwikkelomgevingen onder de loep nemen. Dit zijn juist de factoren die in een bedrijfscontext essentieel zijn voor de adoptie en het succes van dergelijke technologie.
 
-Dit onderzoek vult deze leegte door een systematische evaluatie te bieden van self-hosted LLMs met een focus op gebruik in bedrijven. In tegenstelling tot eerdere studies, die zich voornamelijk richten op prestaties op academische benchmarks, zal deze studie ook aspecten zoals implementatiegemak, veiligheid en compatibiliteit met bestaande workflows beoordelen. Hierdoor wordt niet alleen inzicht gegeven in de technische mogelijkheden van self-hosted LLMs, maar wordt ook een praktische handleiding geboden voor bedrijven die overwegen deze technologie te adopteren.
-
+Dit onderzoek bouwt voort op bestaande literatuur, maar gaat verder door ook de volgende concrete vragen te adresseren: welke benchmarks zijn het meest geschikt om de prestaties van self-hosted LLMs te evalueren, welke hardware- en softwarevereisten zijn noodzakelijk, hoe presteren de gekozen modellen op het gebied van nauwkeurigheid, responstijd en resourcegebruik, en in hoeverre kunnen ze eenvoudig worden geïntegreerd in bestaande ontwikkelworkflows? Door deze aspecten samen te brengen, zal deze studie niet alleen inzicht bieden in de technische prestaties van modellen als StarCoder en Mistral, maar ook een praktische richtlijn vormen voor bedrijven die de overstap naar self-hosted LLMs overwegen. Daarmee draagt dit onderzoek bij aan een meer holistische benadering van LLM-evaluatie, waarin zowel technische als organisatorische factoren worden meegenomen.
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}%
 \label{sec:methodologie}
 
-Het onderzoek zal worden uitgevoerd als een vergelijkende studie waarbij verschillende self-hosted Large Language Models (LLMs) systematisch worden geëvalueerd op basis van hun prestaties en geschiktheid voor gebruik in bedrijfsomgevingen. De gekozen onderzoekstechnieken zijn experimenten en literatuurstudie, gecombineerd met een Proof of Concept (PoC) om de praktische toepasbaarheid van de modellen te testen. Het doel is om objectieve, meetbare resultaten te verkrijgen die bedrijven kunnen helpen bij het selecteren van een model dat voldoet aan hun vereisten voor code-assistentie en datalekpreventie.
+Dit onderzoek volgt een systematische aanpak om de onderzoeksvraag te beantwoorden. De onderzoeksmethoden zijn ingericht rond de eerder geformuleerde deelvragen:
+
+\begin{enumerate}
+    \item Welke benchmarks zijn het meest geschikt om de prestaties van self-hosted LLMs te evalueren?
+
+    \item Wat zijn de hardware- en softwarevereisten voor de implementatie van self-hosted LLMs?
+
+    \item Hoe presteren de geselecteerde modellen op het gebied van nauwkeurigheid, responstijd en resourcegebruik?
+
+    \item Hoe eenvoudig zijn self-hosted LLMs te integreren in bestaande ontwikkelworkflows?
+
+\end{enumerate}
+
+Door het combineren van literatuurstudie, experimentele evaluaties en een Proof of Concept (PoC), wordt een geïntegreerd beeld verkregen. Onderstaande stappen en technieken zijn specifiek gekoppeld aan de deelvragen.
 
 \subsection{Onderzoekstechnieken en stappen}
 
 \begin{enumerate}
     \item \textbf{Literatuurstudie}
     \begin{itemize}
-        \item Een grondige analyse van de huidige stand van zaken rond self-hosted LLMs en bestaande benchmarks voor codeertaken, zoals HumanEval en MBPP \autocite{Chen2021}.
-        \item Het identificeren van geschikte modellen, zoals StarCoder en Mistral, en hun technische vereisten en sterke punten.
+        \item In deze fase worden bestaande studies, documentatie en vakliteratuur onderzocht om inzicht te krijgen in welke benchmarks momenteel worden gebruikt voor het evalueren van codegerichte LLMs. Daarnaast worden de hardware- en softwarevereisten in kaart gebracht aan de hand van documentatie van modelontwikkelaars en ervaringen uit de praktijk. Dit leidt tot:
+        \begin{itemize}
+            \item Identificatie van relevante benchmarks zoals HumanEval en MBPP \autocite{Chen2021}.
+            \item Het opstellen van een overzicht van noodzakelijke infrastructuur (bijvoorbeeld NVIDIA GPU’s, Docker, Kubernetes) voor het zelf hosten van LLMs.
+        \end{itemize}
     \end{itemize}
 
     \item \textbf{Modelselectie en installatie}
     \begin{itemize}
-        \item Selectie van 3-5 self-hosted LLMs op basis van literatuur en beschikbaarheid.
-        \item Installatie van de modellen in een gecontroleerde testomgeving, gebruikmakend van hardware zoals GPU-clusters (bijvoorbeeld NVIDIA A100 of soortgelijke servers) en software-infrastructuur zoals Docker en Kubernetes voor modelhosting.
+        \item Op basis van de literatuurstudie worden 3-5 self-hosted LLMs geselecteerd (bijvoorbeeld StarCoder, Mistral). Deze modellen worden geïnstalleerd in een gecontroleerde testomgeving. Hierbij wordt gelet op:
+        \begin{itemize}
+            \item De vereisten voor hardware (GPU’s) en software (model-implementaties, container- en orkestratietools).
+            \item Het controleren van de haalbaarheid en complexiteit van de set-up, wat inzichten biedt voor deelvraag 2.
+        \end{itemize}
     \end{itemize}
 
     \item \textbf{Ontwikkeling van benchmarks en testcases}
     \begin{itemize}
-        \item Samenstellen van een set programmeerproblemen in verschillende talen en moeilijkheidsgraden, gebaseerd op bestaande benchmarks zoals HumanEval.
-        \item Ontwikkelen van testcases om specifieke prestatie-indicatoren te meten, zoals codegeneratienauwkeurigheid, responstijd en resourcegebruik.
+        \item Op basis van de literatuurstudie worden benchmarks en testcases samengesteld om de prestaties van de geselecteerde modellen te meten. Hierbij gaat het om:
+        \begin{itemize}
+            \item Het selecteren of aanpassen van bestaande benchmarks (HumanEval, MBPP) voor codegeneratietaken, zodat zij representatief zijn voor bedrijfsrelevante scenario’s.
+            \item Het opstellen van prestatie-indicatoren als nauwkeurigheid (correctheid van gegenereerde code), responstijd (tijd tot bruikbaar antwoord), en resourcegebruik (GPU-gebruik, geheugengebruik).
+            Dit beantwoordt deels deelvraag 1 (keuze van benchmarks) en vormt de meetlat voor deelvraag 3 (prestatie-indicatoren).
+        \end{itemize}
     \end{itemize}
 
     \item \textbf{Experimenten uitvoeren}
     \begin{itemize}
-        \item Testen van de modellen onder identieke omstandigheden.
-        \item Verzamelen van meetbare data, zoals de gemiddelde tijd om een probleem op te lossen, de foutmarge in de gegenereerde code en het gebruik van systeembronnen.
-        \item Veiligheidsanalyse van de modellen, inclusief een controle op data-uitwisseling en logging om te verifiëren dat gegevens niet extern worden opgeslagen.
+        \item Alle geselecteerde modellen worden onder identieke omstandigheden getest. Hierbij wordt:
+        \begin{itemize}
+            \item De nauwkeurigheid bepaald aan de hand van gestandaardiseerde testcases.
+            \item De responstijd gemeten op identieke codeerproblemen.
+            \item Het resourcegebruik (GPU, CPU, geheugen) bijgehouden.
+            \item Ook worden veiligheidscontroles uitgevoerd (bijv. controle op datalekken of externe dataopslag) om de geschiktheid voor een bedrijfsomgeving te beoordelen.
+            De uitkomsten van deze experimenten geven een duidelijk antwoord op deelvraag 3.
+            Dit beantwoordt deels deelvraag 1 (keuze van benchmarks) en vormt de meetlat voor deelvraag 3 (prestatie-indicatoren).
+        \end{itemize}
     \end{itemize}
 
     \item \textbf{Proof of Concept (PoC)}
     \begin{itemize}
-        \item Integratie van een geselecteerd model in een eenvoudige ontwikkelworkflow (bijvoorbeeld een lokaal geïnstalleerde IDE zoals Visual Studio Code met AI-plug-ins).
-        \item Evaluatie van het gebruiksgemak en de impact op de ontwikkelsnelheid en -kwaliteit in een praktijkgerichte context.
+        \item Om te onderzoeken hoe eenvoudig de modellen kunnen worden geïntegreerd in bestaande ontwikkelomgevingen, wordt een PoC opgezet. Hierbij wordt een geselecteerd model geïntegreerd in een ontwikkelworkflow:
+        \begin{itemize}
+            \item Inzet van een LLM in een lokaal geïnstalleerde IDE (bijvoorbeeld Visual Studio Code) met AI-plug-ins.
+            \item Evaluatie van de gebruiksvriendelijkheid, de benodigde aanpassingen aan de ontwikkelworkflow en de daadwerkelijke tijdswinst en codekwaliteit.
+            Dit proces levert direct inzicht in de praktische toepasbaarheid en beantwoordt deelvraag 4.
+        \end{itemize}
     \end{itemize}
 \end{enumerate}
 
 \subsection{Tools en technologieën}
 
 \begin{itemize}
-    \item \textbf{Hardware:} NVIDIA GPU’s (bij voorkeur A100 of H100 voor optimale prestaties), lokale servers of een on-premises datacenter.
-    \item \textbf{Software:} Docker, Kubernetes, Python, en tooling voor benchmarking zoals OpenAI’s evaluation scripts \autocite{Brown2020}.
-    \item \textbf{Benchmarks:} HumanEval, MBPP, en eventueel aangepast voor specifieke bedrijfsomgevingen.
+    \item \textbf{Hardware:} Hardware: NVIDIA GPU’s (A100/H100) voor optimale prestatie.
+    \item \textbf{Software:} Software: Docker, Kubernetes voor modelhosting en schaalbaarheid; Python voor scripts en analyses; benchmarking tools (bijvoorbeeld OpenAI’s evaluation scripts \autocite{Brown2020}).
+    \item \textbf{Benchmarks:} Benchmarks: HumanEval, MBPP, mogelijk aangevuld met bedrijfsrelevante testcases.
 \end{itemize}
 
 \subsection{Tijdschatting en deliverables}
 
 \begin{itemize}
     \item \textbf{Literatuurstudie en modelselectie} (3 weken)  
-    Deliverable: Overzicht van relevante LLMs en benchmarks, inclusief een korte vergelijking op basis van theoretische sterktes en vereisten.
+    Deliverable: Overzicht relevante benchmarks, infrastructuurvereisten, modelkeuze.
 
     \item \textbf{Modelimplementatie en testomgeving opzetten} (4 weken)  
     Deliverable: Werkende self-hosted implementaties van geselecteerde modellen.
@@ -110,10 +151,10 @@ Het onderzoek zal worden uitgevoerd als een vergelijkende studie waarbij verschi
     Deliverable: Werkende integratie van een LLM in een lokale ontwikkelworkflow, inclusief documentatie en bevindingen.
 
     \item \textbf{Analyse en rapportage} (3 weken)  
-    Deliverable: Eindrapport met aanbevelingen en conclusie.
+    Deliverable: Eindrapport met conclusies, aanbevelingen en beantwoording van alle deelvragen.
 \end{itemize}
 
-De totale geschatte duur van het onderzoek is 18 weken. Hiermee wordt voldaan aan de technische diepgang en de vereiste tijdsinvestering voor een bachelorproef in informatica.
+Door deze aanpak worden alle deelvragen direct of indirect beantwoord en ontstaat een volledig beeld van de praktische inzetbaarheid van self-hosted LLMs in een bedrijfscontext.
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
@@ -121,25 +162,42 @@ De totale geschatte duur van het onderzoek is 18 weken. Hiermee wordt voldaan aa
 
 \subsection{Verwacht resultaat}
 
-Het onderzoek zal resulteren in een systematische evaluatie van self-hosted Large Language Models (LLMs) zoals StarCoder en Mistral op basis van hun prestaties en geschiktheid voor code-assistentie in bedrijfsomgevingen. De verwachte resultaten omvatten:
-
+Het onderzoek zal resulteren in een systematische evaluatie van self-hosted Large Language Models (LLMs) zoals StarCoder en Mistral op basis van hun prestaties en geschiktheid voor code-assistentie in bedrijfsomgevingen. De verwachte resultaten worden hierbij gerelateerd aan de gestelde deelvragen:
 \begin{itemize}
-    \item \textbf{Prestaties:} Een gedetailleerde vergelijking van de modellen op basis van metrics zoals:
+    \item \textbf{(deelvraag 1)} Benchmarks
     \begin{itemize}
-        \item Codegeneratienauwkeurigheid (correctheid van de gegenereerde code).
-        \item Responstijd (in seconden) voor verschillende programmeerproblemen.
-        \item Resourcegebruik (GPU-geheugen, CPU-gebruik).
+        \item Een duidelijk overzicht van welke benchmarks (bijvoorbeeld HumanEval, MBPP) het meest geschikt zijn voor het evalueren van self-hosted LLMs. Dit omvat een onderbouwing waarom deze benchmarks representatief zijn voor reële programmeerproblemen binnen bedrijven.
     \end{itemize}
 
-    \item \textbf{Veiligheid:} Bevestiging dat self-hosted modellen geen data opslaan of externe verbindingen maken tijdens het uitvoeren van code-assistentie.
+    \item \textbf{(deelvraag 2)} Implementatievereisten
+    \begin{itemize}
+        \item Een specificatie van de benodigde hardware- en softwarevereisten voor het zelf hosten van LLMs, inclusief aanbevelingen voor GPU-configuraties, container- en orkestratietools, en richtlijnen voor het optimaal inzetten van modelresources.
+    \end{itemize}
 
     \item \textbf{Praktische toepasbaarheid:} Een beoordeling van hoe eenvoudig deze modellen kunnen worden geïntegreerd in een typische ontwikkelworkflow, inclusief hun compatibiliteit met tools zoals Visual Studio Code of JetBrains IDE's.
 
-    \item \textbf{Benchmarkresultaten:} Gevisualiseerde data zoals mock-up grafieken:
+    \item \textbf{(deelvraag 3)} Prestaties
+    \item Een gedetailleerde vergelijking van de geselecteerde modellen met betrekking tot:
     \begin{itemize}
-        \item Een staafdiagram dat de nauwkeurigheid per model weergeeft op verschillende programmeertaken.
-        \item Een lijngrafiek die de responstijd vergelijkt bij het oplossen van problemen met oplopende complexiteit.
-        \item Een spreidingsdiagram van het resourcegebruik tegenover de modelprestaties.
+        \item Codegeneratienauwkeurigheid: Mate waarin de gegenereerde code correct en functioneel is, gemeten aan de hand van vooraf gedefinieerde testcases.
+        \item Responstijd: De gemiddelde tijd (in seconden) om een programmeerprobleem op te lossen, gemeten voor taken van verschillende complexiteitsniveaus.
+        \item Resourcegebruik: Het GPU-geheugen- en CPU-verbruik tijdens het genereren van code, vastgelegd in kwantitatieve metingen.
+    \end{itemize}
+    \item Deze resultaten worden ondersteund door gevisualiseerde data, zoals:
+    \begin{itemize}
+        \item Een staafdiagram voor nauwkeurigheid per model per taak.
+        \item Een lijngrafiek voor responstijd in relatie tot taakcomplexiteit.
+        \item Een spreidingsdiagram voor resourcegebruik tegenover modelprestaties.
+    \end{itemize}
+    \item Daarnaast wordt er aandacht besteed aan veiligheid: bevestiging dat de zelfgehoste modellen geen data opslaan of externe verbindingen leggen, wat cruciaal is voor het minimaliseren van datalekrisico’s.
+    
+    \item \textbf{(deelvraag 4)} Integratiegemak
+    \item Een beoordeling van hoe eenvoudig deze modellen kunnen worden geïntegreerd in een typische ontwikkelworkflow. Hierbij wordt beschreven:
+    \begin{itemize}
+        \item De compatibiliteit met ontwikkelomgevingen (zoals Visual Studio Code of JetBrains IDE’s).
+        \item De benodigde configuratiestappen, tools en plug-ins.
+        \item De invloed op ontwikkelsnelheid en codekwaliteit vanuit het perspectief van een eindgebruiker.
+    \item Deze resultaten bieden organisaties een gefundeerd overzicht van de voor- en nadelen van self-hosted LLMs, en dienen als leidraad bij de selectie en integratie van dergelijke modellen in hun eigen ontwikkelpraktijk.
     \end{itemize}
 \end{itemize}
 
