@@ -1,35 +1,41 @@
 %%=============================================================================
 %% Inleiding
 %%=============================================================================
-
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-As artificial intelligence (AI) rapidly advances, AI-powered coding assistants have become increasingly prevalent due to their capacity to significantly enhance productivity, efficiency, and developer workflows. Notably, transformer-based Large Language Models (LLMs), such as OpenAI's Codex and GitHub Copilot, have demonstrated a remarkable ability to generate code, interpret natural language prompts, and substantially accelerate coding tasks. Developers leveraging these tools report substantial productivity gains, including reduced mental load from repetitive coding tasks and enhanced workflow efficiency. Despite these benefits, the widespread adoption of cloud-based AI coding assistants by enterprises has been constrained primarily due to data security and privacy concerns.
-Recent incidents have underscored the critical risks associated with cloud-hosted AI assistants. Samsung's 2023 decision to prohibit employee use of cloud-based AI tools arose after a sensitive internal source code leak occurred via an external AI model, highlighting vulnerabilities in how user data is stored and managed externally \autocite{KoreaHerald2023}. Similarly, major financial institutions like JPMorgan Chase and Goldman Sachs have proactively restricted the usage of such cloud-based services to mitigate regulatory and confidentiality risks. These incidents underscore the potential for inadvertent data exposure, compliance violations, and loss of intellectual property control associated with external AI deployments.
-In light of these pressing concerns, one potential solution for enterprises is the deployment of self-hosted Large Language Models (LLMs) for secure coding assistance, running these models internally within their infrastructure. Self-hosted LLMs could enhance data privacy and compliance by ensuring operations remain entirely within the organization's environment, eliminating reliance on external services. However, this approach introduces new complexities, including integration challenges, computational resource demands, and ensuring secure, reliable operations within enterprise infrastructure.
+As \gls{AI} rapidly advances, \gls{AI}-powered coding assistants have become increasingly prevalent due to their capacity to significantly enhance productivity, efficiency, and developer workflows. Notably, transformer-based \glspl{LLM}, such as OpenAI's Codex and GitHub Copilot, have demonstrated a remarkable ability to generate code, interpret natural language prompts, and substantially accelerate coding tasks. Developers leveraging these tools report substantial productivity gains, including reduced mental load from repetitive coding tasks and enhanced workflow efficiency \autocite{Microsoft2023Copilot}. Despite these benefits, the widespread adoption of cloud-based \gls{AI} coding assistants by enterprises has been constrained primarily due to data security and privacy concerns.
+
+Recent incidents have highlighted the critical risks associated with cloud-hosted \gls{AI} assistants. Samsung's 2023 decision to prohibit employee use of cloud-based \gls{AI} tools arose after a sensitive internal source code leak occurred via an external \gls{AI} model, highlighting vulnerabilities in how user data is stored and managed externally \autocite{Park2023Samsung}. Similarly, major financial institutions like JPMorgan Chase and Goldman Sachs have proactively restricted the usage of such cloud-based services to mitigate regulatory and confidentiality risks \autocite{Kessel2024}. These incidents underscore the potential for inadvertent data exposure, compliance violations, and loss of intellectual property control associated with external \gls{AI} deployments.
+
+In light of these pressing concerns, one potential solution for enterprises is the deployment of self-hosted \glspl{LLM} for secure coding assistance, running these models internally within their infrastructure. Self-hosted \glspl{LLM} could enhance data privacy and compliance by ensuring operations remain entirely within the organization's environment, eliminating reliance on external services. However, this approach introduces new complexities, including integration challenges, computational resource demands, and ensuring secure, reliable operations within enterprise infrastructure.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-A central concern driving hesitation among enterprises regarding cloud-based AI coding assistants involves the uncertainty surrounding data handling practices. Enterprises worry that their proprietary code or sensitive information could inadvertently become training data, accessible to external entities. Although prominent services like ChatGPT and Google's Gemini provide the ability to disable user data retention, these options require proactive action from users and may not fully mitigate data security risks. Consequently, enterprises face ambiguity regarding their data exposure, reinforcing a cautious stance toward cloud-based AI coding tools.
+A central concern driving hesitation among enterprises regarding cloud-based \gls{AI} coding assistants involves the uncertainty surrounding data handling practices. Enterprises worry that their proprietary code or sensitive information could inadvertently become training data, accessible to external entities. Although prominent services like ChatGPT and Google's Gemini provide the ability to disable user data retention, these options require proactive action from users and may not fully mitigate data security risks. Consequently, enterprises face ambiguity regarding their data exposure, reinforcing a cautious stance toward cloud-based \gls{AI} coding tools.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Which self-hosted LLMs offer the best support for coding tasks while minimizing data leakage risks?
+\begin{quote}
+	\textit{Which self-hosted \glspl{LLM} offer the best support for coding tasks while minimizing data leakage risks?}
+\end{quote}
+\label{rq:main}
 
-\begin{itemize}
-  \item Can self-hosted LLMs reliably assist in secure software development without introducing vulnerabilities?
-  \item How does the performance of self-hosted LLMs compare to cloud-based AI tools in coding tasks?
-  \item What are the deployment challenges and resource requirements of running LLMs locally?
-  \item What best practices should organizations follow when integrating self-hosted AI coding assistants?
-\end{itemize}
+To address this overarching question, we formulated the following \textbf{research sub-questions}:
+
+\begin{enumerate}[label=SQ\arabic*., ref=SQ\arabic*]
+	\item \label{sq:secure-dev} Can self-hosted \glspl{LLM} reliably assist in secure software development without introducing vulnerabilities?
+	\item \label{sq:performance} How does the performance of self-hosted \glspl{LLM} compare to cloud-based \gls{AI} tools in coding tasks?
+	\item \label{sq:deployment} What are the deployment challenges and resource requirements of running \glspl{LLM} locally?
+	\item \label{sq:best-practices} What best practices should organizations follow when integrating self-hosted \gls{AI} coding assistants?
+\end{enumerate}
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-The main objective of this research is to thoroughly analyze and evaluate locally hosted machine learning models for coding assistance, assessing their effectiveness, robustness, and suitability compared to cloud-based alternatives. This study specifically investigates the capabilities of self-hosted models in handling coding tasks, emphasizing scenarios where sensitive or proprietary data protection is critical. Through a structured benchmarking and comparative approach, the research aims to provide enterprises with clear insights into the advantages, limitations, and practical considerations of adopting local models over cloud-based solutions. Ultimately, this analysis offers guidance for enterprise decision-makers on whether investing resources into self-hosting machine learning models aligns with their strategic priorities regarding data privacy, security, and operational efficiency.
+The central aim of this research is a comprehensive examination and detailed evaluation of locally-hosted \glspl{LLM} tailored for coding assistance. It rigorously assesses their performance, resilience, and appropriateness relative to cloud-based alternatives. The study focuses explicitly on the capabilities of these self-managed models in executing programming tasks, particularly highlighting use-cases involving critical data confidentiality or proprietary information. Utilizing systematic benchmarking and a comparative methodology, this research seeks to deliver actionable insights into the strengths, constraints, and operational factors associated with adopting local machine learning models. Consequently, the outcomes of this extensive analysis will equip both businesses and individual users with essential guidance, facilitating a clear understanding of whether maintaining in-house machine learning models aligns effectively with their strategic objectives concerning data protection, security considerations, and workflow efficiency.
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
 
@@ -43,6 +49,8 @@ Chapter~\ref{ch:stand-van-zaken} provides an overview of the current state of re
 
 Chapter~\ref{ch:methodologie} explains the methodology and discusses the research techniques used to address the research questions.
 
+Chapter~\ref{ch:proof-of-concept} justifies the approach of research and provides a comprohensive guide to reproduce the results found in the results Chapter~\ref{ch:results}.
+
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
-Finally, Chapter~\ref{ch:conclusie} presents the conclusion, answering the research questions, and also outlines avenues for future research within this domain.
+Finally, Chapter~\ref{ch:conclusie} presents the conclusion, answering the overarching research question and sub-questions, and also outlines avenues for future research within this domain.

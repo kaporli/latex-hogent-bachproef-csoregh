@@ -1,0 +1,210 @@
+\chapter{Results}
+\label{ch:results}
+
+\section{Benchmarking Overview and Comparative Evaluation Strategy}
+
+This chapter presents the outcomes of our benchmarking experiments conducted on a curated set of self-hosted 7B code generation models. The goal of this evaluation is to assess the practical performance of locally executable models across multiple code-oriented benchmarks and to contextualize these findings against publicly reported results for larger open-weight models and commercial cloud-based systems.
+
+As described in Chapter~\ref{ch:proof-of-concept}, all models were evaluated under uniform local conditions using the \texttt{bigcode-evaluation-harness}, ensuring consistency in input formatting, sampling configuration, and pass@1 computation. In total, four benchmarks were employed: MBPP and HumanEval---representing functional correctness evaluations on standard Python programming tasks and algorithmic reasoning problems, respectively---and their extended variants, MBPP+ and HumanEval+, which consist of additional or modified problem sets but remain within the scope of zero-shot evaluation in our setup. All tasks were executed without providing any example completions or prompts beyond the task description, in accordance with our focus on isolated functional synthesis.
+
+The results from our self-hosted evaluations are then placed in direct comparison with published scores as reported on the EvalPlus Leaderboard~\autocite{evalplus_leaderboard}, which aggregates reported pass@1 performance for a broad range of high-performing models. These include state-of-the-art cloud-hosted models such as OpenAI’s GPT-4, Google’s Gemini series, and the recently unveiled DeepSeek suite of models, as well as larger open-weight models---ranging between 13B and 70B parameters---that we were unable to run locally due to hardware constraints. While these models represent the current frontier in coding performance, they also bring well-documented trade-offs in terms of data privacy, cost, and deployment transparency, as previously outlined in Chapters~\ref{ch:inleiding} and~\ref{ch:stand-van-zaken}.
+
+By structuring our analysis across the four aforementioned benchmarks, we aim to explore the extent to which specialized, instruction-tuned 7B models can serve as viable alternatives in secure, on-premises environments. This aligns directly with our central research question (see Section~\ref{rq:main}), and specifically addresses several of the formulated sub-questions—most notably the comparative performance of local and cloud-based systems (Sub-question~\ref{sq:performance}), the feasibility of deploying these models under hardware constraints (Sub-question~\ref{sq:deployment}), and the potential implications for secure development workflows (Sub-question~\ref{sq:secure-dev}). Each subsection in this chapter focuses on one benchmark and is structured to highlight absolute performance across local models, followed by comparative interpretation using published leaderboard results.
+
+Together, these evaluations provide the empirical foundation for the conclusions developed in Chapter~\ref{ch:conclusie}, where we synthesize our findings in light of the organizational, technical, and ethical implications of adopting self-hosted AI coding assistants.
+
+\subsection{Benchmark Performance of Local 7B Models}
+
+% LOCAL
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp_local.png}
+	\captionof{figure}{MBPP Pass@1 scores for locally deployed 7B parameter models}
+	\label{fig:mbpp-local}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp+_local.png}
+	\captionof{figure}{MBPP+ Pass@1 scores for locally deployed 7B parameter models}
+	\label{fig:mbppplus-local}
+\end{center}
+
+Across the MBPP and MBPP+ benchmarks (Figures~\ref{fig:mbpp-local} and~\ref{fig:mbppplus-local}), a strong stratification emerges among the locally deployed 7B models. Qwen2.5-Coder-7B-Instruct dominates the MBPP benchmark with a pass@1 of 73.8\%, clearly separating itself from the rest of the cohort. The next highest scorer, DeepSeek-Coder-7B-Instruct-v1.5, trails at 58.4\%, while Google-CodeGemma-7B-it follows at 50.4\%. This top-three cluster surpasses the 50\% threshold and represents models likely benefiting from strong alignment with real-world coding patterns found in MBPP.
+
+In contrast, a second cluster of mid-performing models—including Meta-CodeLlama-7B-Python (45.6\%) and BigCode-StarCoder2-7B (45.4\%)—demonstrates more modest accuracy, suggesting limitations either in fine-tuning quality or architecture-task fit. Mistral-v0.3-7B-Instruct and Mamba-Codestral-7B-v0.1 perform worst among the group, scoring just 38.2\% and 36.4\% respectively. These results reaffirm that, even within the same parameter class and hardware constraints, there is wide variability in performance depending on design choices and training pipelines.
+
+Upon transitioning to MBPP+, which rephrases and diversifies the prompts, most models improve. DeepSeek-Coder-7B-Instruct-v1.5 climbs to 64.0\%, a gain of +5.6\%, and Google-CodeGemma-7B-it similarly improves to 56.6\% (+6.2\%). Interestingly, models from the lower tier also benefit—Mistral rises by +5.7\%, and Mamba-Codestral gains +3.8\%, suggesting that these models may generalize better when task phrasing is broadened.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp_delta_local.png}
+	\captionof{figure}{Δ Pass@1 between MBPP+ and MBPP for locally deployed 7B models}
+	\label{fig:mbpp-delta-local}
+\end{center}
+
+However, the standout anomaly is Qwen2.5-Coder-7B-Instruct, which uniquely drops in performance, falling from 73.8\% to 70.1\% (−3.7\%)—the only negative delta among all models (Figure~\ref{fig:mbpp-delta-local}). This suggests that Qwen2.5’s architecture or fine-tuning is highly optimized for the phrasing and structural regularity of MBPP. The additional prompt diversity introduced in MBPP+ appears to destabilize its completions rather than enhance them, reinforcing the notion that Qwen2.5’s high baseline reflects strong pattern matching rather than in-context adaptability.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval_local.png}
+	\captionof{figure}{HumanEval Pass@1 scores for locally deployed 7B parameter models}
+	\label{fig:humaneval-local}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval+_local.png}
+	\captionof{figure}{HumanEval+ Pass@1 scores for locally deployed 7B parameter models}
+	\label{fig:humanevalplus-local}
+\end{center}
+
+A dramatic shift occurs when analyzing the HumanEval results. The most notable reversal is Qwen2.5-Coder-7B-Instruct: from being the clear leader on MBPP, it drops to 28.7\% on HumanEval, ranking near the bottom (Figure~\ref{fig:humaneval-local}). This sudden regression illustrates a severe lack of algorithmic reasoning capability—Qwen2.5 appears effective for routine programming but fails when abstraction and problem solving are required.
+
+In contrast, DeepSeek-Coder-7B-Instruct-v1.5 exhibits remarkable consistency. Already strong on MBPP, it leads again on HumanEval with 69.5\% pass@1. Google-CodeGemma-7B-it retains its upper-middle position with 56.7\%, while mid-performers such as Meta-CodeLlama-7B-Python and StarCoder2-7B hover around the 36–41\% range. Mamba-Codestral underperforms across all tasks, bottoming out at 17.7\%.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval_delta_local.png}
+	\captionof{figure}{Δ Pass@1 between HumanEval+ and HumanEval for locally deployed 7B models}
+	\label{fig:humaneval-delta-local}
+\end{center}
+
+HumanEval+ introduces prompt variety in problem descriptions while preserving the underlying logic. This shift proves universally difficult: all models see a decline in pass@1, as shown in Figure~\ref{fig:humaneval-delta-local}. DeepSeek-Coder-7B-Instruct-v1.5 drops −3.0\%, Google-CodeGemma −4.3\%, and Mistral −4.9\%, indicating that their instruction-following capabilities are not as robust when problem statements deviate from familiar templates. StarCoder2-7B and Meta-CodeLlama also decline by −4.3\% and −3.7\% respectively.
+
+Interestingly, Qwen2.5 shows the smallest relative decline (−1.8\%)—but this is misleading. Rather than indicating robustness, this minimal delta likely reflects a floor effect: its already-low performance on HumanEval (28.7\%) leaves little room for further deterioration. It does not recover any ground on HumanEval+, finishing at just 26.8\%.
+
+\subsubsection*{Interpretation of Δ Patterns Across Tasks}
+
+The Δ patterns between base and + variants of both benchmarks offer critical insight into task suitability and model generalizability. On MBPP+, nearly all models improve. This implies that when tasks involve standard library functions, control flow, or data structures, models benefit from prompt variety and may have latent few-shot capabilities—even without explicit few-shot context. On the other hand, the across-the-board decline on HumanEval+ reveals that prompt diversity is not helpful when tasks require logical planning or multi-step reasoning. In these cases, base model capability—not prompt phrasing—is the limiting factor.
+
+These trends directly relate to Sub-question~\ref{sq:performance} and Sub-question~\ref{sq:deployment}. From a performance perspective, DeepSeek and CodeGemma exhibit both algorithmic competence and adaptability across formats. Qwen2.5, by contrast, excels only in pattern-rich, low-complexity tasks and appears fragile under prompt perturbation or reasoning demands. From a deployment lens, this suggests that developers relying on Qwen2.5 may achieve great performance in boilerplate-heavy workflows but will need to fall back on alternative tools for debugging or novel algorithm design.
+
+\subsubsection*{Cross-Benchmark Patterns and Implications}
+
+Viewed together, the MBPP and HumanEval benchmark sets expose divergent strengths among 7B models:
+
+\textbf{Task Specialization:} Qwen2.5-Coder-7B-Instruct is a specialist in functional programming tasks that require syntax correctness and API familiarity. Its failure to generalize to HumanEval points to a lack of deeper semantic or logical processing. In contrast, DeepSeek-Coder-7B-Instruct-v1.5 stands out as a generalist, consistently achieving top scores across both practical and algorithmic tasks.
+
+\textbf{Instruction Tuning and Pretraining Quality:} The relative strength of CodeGemma, DeepSeek, and Meta-CodeLlama may be attributable to their pretraining on diverse, high-quality coding corpora and instruction datasets. These models display resilience to prompt variation and maintain performance under task pressure. Mamba-Codestral and Mistral, on the other hand, appear less robust—potentially due to narrower fine-tuning, lack of high-quality instructions, or incompatible model internals.
+
+In summary, these local benchmarking results provide a performance map that directly addresses Sub-question~\ref{sq:performance} regarding model capability and Sub-question~\ref{sq:deployment} concerning hardware-efficient inference. They also lay the groundwork for upcoming comparisons with larger open-weight and proprietary cloud-based systems, which will further illuminate how close 7B models have come to closing the performance gap—especially under the constraints of local, secure deployment.
+
+% LARGE OPEN-WEIGHT
+
+\subsection{Benchmark Performance of Large Open-Weight Models}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp_openweight.png}
+	\captionof{figure}{MBPP Pass@1 scores for top open-weight models}
+	\label{fig:mbpp-openweight}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp+_openweight.png}
+	\captionof{figure}{MBPP+ Pass@1 scores for top open-weight models}
+	\label{fig:mbppplus-openweight}
+\end{center}
+
+Across the MBPP and MBPP+ benchmarks (Figures~\ref{fig:mbpp-openweight} and~\ref{fig:mbppplus-openweight}), large open-weight models display a dense clustering at the top end of the pass@1 spectrum. OpenCodeInterpreter-DS-33B leads with 79.3\%, followed closely by speechless-codellama-34B-v2.0 (77.4\%) and starchat2-15b-v0.1 (73.8\%). All three exceed the 70\% threshold, signaling state-of-the-art performance on functional Python programming tasks.
+
+Mid-range models like Code-13B, Code-33B, and OpenHermes-2.5-Code-290k-13B fall into the 54--56\% range, forming a second tier with relatively tight performance spread. At the lower end, StarCoder2-15B (46.3\%) and SOLAR-10.7B-Instruct-v1.0 (43.3\%) round out the leaderboard. These models may suffer from either insufficient instruction tuning or lack of architectural specialization for coding.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp_delta_openweight.png}
+	\captionof{figure}{\(\Delta\) Pass@1 between MBPP+ and MBPP for top open-weight models}
+	\label{fig:mbpp-delta-openweight}
+\end{center}
+
+Most models show a performance decline on MBPP+ (Figure~\ref{fig:mbpp-delta-openweight}), contrary to the trend observed in our local 7B benchmarks. StarCoder2-15B is the most affected, with a steep drop of −8.5\%, followed by starcoder2-15b-instruct-v0.1 at −7.3\%. Larger models like OpenCodeInterpreter-DS-33B, speechless-codellama-34B-v2.0, and Code-33B all lose −5.4--5.5\%, suggesting that even models with massive parameter counts are not immune to the destabilizing effects of prompt variation.
+
+starchat2-15b-v0.1 experiences the smallest drop (−2.5\%), which may reflect better alignment with diverse prompts or superior instruction-following capabilities. However, no model improves, reinforcing that MBPP+—despite being syntactically similar to MBPP—can impose real challenges when prompts deviate from canonical phrasing.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval_openweight.png}
+	\captionof{figure}{HumanEval Pass@1 scores for top open-weight models}
+	\label{fig:humaneval-openweight}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval+_openweight.png}
+	\captionof{figure}{HumanEval+ Pass@1 scores for top open-weight models}
+	\label{fig:humanevalplus-openweight}
+\end{center}
+
+The HumanEval results (Figures~\ref{fig:humaneval-openweight} and~\ref{fig:humanevalplus-openweight}) mirror the MBPP trends. OpenCodeInterpreter-DS-33B again tops the chart at 79.3\%, with speechless-codellama-34B-v2.0 (77.4\%) and starchat2-15b-v0.1 (73.8\%) close behind. These models consistently demonstrate algorithmic competence across both base and + variants.
+
+Lower-performing entries, such as SOLAR-10.7B-Instruct-v1.0 (43.3\%) and StarCoder2-15B (46.3\%), reinforce that scale alone does not guarantee robustness in structured problem-solving.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval_delta_openweight.png}
+	\captionof{figure}{\(\Delta\) Pass@1 between HumanEval+ and HumanEval for top open-weight models}
+	\label{fig:humaneval-delta-openweight}
+\end{center}
+
+HumanEval+ introduces more natural or diverse problem descriptions while preserving the underlying logic. Every model suffers a performance decline, with StarCoder2-15B showing the worst drop at −8.5\%. starcoder2-15b-instruct-v0.1 and speechless-starcoder2-15b also fall sharply (−7.3\% and −4.3\% respectively). Even leaders like OpenCodeInterpreter-DS-33B and Code-33B decline by −5.5\%, pointing to the inherent challenge of generalizing to varied prompt phrasing.
+
+\subsubsection*{Cross-Benchmark Synthesis}
+
+When viewed holistically, these large open-weight models show high peak performance but comparatively brittle generalization. Unlike locally deployed 7B models—many of which improved on MBPP+—larger models often regress under prompt variation. This contrast suggests that small models may benefit from tighter instruction tuning, while larger models may overfit to training distributions or exhibit fragility at scale.
+
+For Sub-question~\ref{sq:performance}, these results confirm that although open-weight giants can match cloud-grade accuracy on curated tasks, their behavior under real-world conditions may falter. Subtle prompt changes lead to double-digit percentage losses in some cases. From a deployment standpoint (Sub-question~\ref{sq:deployment}), this inconsistency demands caution: deploying large open-weight models may require heavier prompt engineering or downstream validation pipelines to ensure safety and reliability.
+
+This comparative section establishes an upper-bound reference for self-hosted performance. The subsequent cloud model analysis will extend this contrast further, offering insight into whether proprietary models outperform open-weight systems not just in average score, but also in adaptability and resilience under varied task settings.
+
+% CLOUD
+
+\subsection{Benchmark Performance of Cloud-Based Models}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp_cloud.png}
+	\captionof{figure}{MBPP Pass@1 scores for top proprietary cloud-based models}
+	\label{fig:mbpp-cloud}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp+_cloud.png}
+	\captionof{figure}{MBPP+ Pass@1 scores for top proprietary cloud-based models}
+	\label{fig:mbppplus-cloud}
+\end{center}
+
+On the MBPP benchmark (Figure~\ref{fig:mbpp-cloud}), cloud-based models dominate the performance frontier. o1 Preview (Sept 2024) and o1 Mini (Sept 2024) share the highest pass@1 score of 96.3\%, closely followed by GPT-4o (Aug 2024) and Qwen2.5-Coder-32B-Instruct, each with 92.7\% and 92.1\%, respectively. DeepSeek variants (V3, V2.5, and Coder-V2-Instruct) and GPT-4 models (April 2024, Nov 2023) round out the list with high-80\% scores, reinforcing that the proprietary frontier in code generation is advancing rapidly.
+
+The MBPP+ results (Figure~\ref{fig:mbppplus-cloud}) confirm this dominance. All models remain above 81.7\% in pass@1 accuracy, with top entries like o1 Preview and o1 Mini holding steady at 89.0\%. These scores suggest strong instruction-following robustness and generalization to prompt rephrasings.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/mbpp_mbpp_delta_cloud.png}
+	\captionof{figure}{\(\Delta\) Pass@1 between MBPP+ and MBPP for top proprietary cloud models}
+	\label{fig:mbpp-delta-cloud}
+\end{center}
+
+Despite their high absolute scores, nearly all models exhibit a negative delta on MBPP+ (Figure~\ref{fig:mbpp-delta-cloud}). Gemini 1.5 Pro 002 and GPT-4 (May 2023) decline the most, losing −9.7\% and −9.1\%, respectively. Even top models like o1 Preview and o1 Mini lose −7.3\%, indicating that prompt sensitivity remains an issue at the cutting edge.
+
+GPT-4o, Qwen2.5-32B, and DeepSeek-V3 are among the least affected (−4.9\% each), highlighting relative stability but also implying potential gains from improved prompt robustness mechanisms.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval_cloud.png}
+	\captionof{figure}{HumanEval Pass@1 scores for top proprietary cloud-based models}
+	\label{fig:humaneval-cloud}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval+_cloud.png}
+	\captionof{figure}{HumanEval+ Pass@1 scores for top proprietary cloud-based models}
+	\label{fig:humanevalplus-cloud}
+\end{center}
+
+On HumanEval (Figure~\ref{fig:humaneval-cloud}), the pattern is similar. o1 Preview and o1 Mini again lead with 96.3\%, while GPT-4o, Qwen2.5-Coder-32B-Instruct, and DeepSeek-V3 all exceed 91\%. GPT-4 models from earlier releases still perform well, with pass@1 around 88.4\%--90.2\%.
+
+HumanEval+ (Figure~\ref{fig:humanevalplus-cloud}) introduces rephrased problems and natural language variance, and once again all models register performance drops.
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{/Users/csoregh/Documents/Thesis/Analyze/humaneval_humaneval_delta_cloud.png}
+	\captionof{figure}{\(\Delta\) Pass@1 between HumanEval+ and HumanEval for top proprietary cloud models}
+	\label{fig:humaneval-delta-cloud}
+\end{center}
+
+As shown in Figure~\ref{fig:humaneval-delta-cloud}, Gemini 1.5 Pro 002 and GPT-4 (May 2023) again incur the steepest penalties, dropping −9.7\% and −9.1\%, respectively. o1 Preview, o1 Mini, and GPT-4o all drop by −7.3\% to −5.5\%. Only GPT-4-Turbo (April 2024) exhibits a relatively modest decline (−3.6\%), reflecting a rare case of prompt resilience.
+
+\subsubsection*{Cloud Performance Summary and Implications}
+
+These results demonstrate that proprietary cloud models consistently achieve the highest pass@1 scores across all benchmarks. However, they are not immune to prompt variability. All top performers decline on both MBPP+ and HumanEval+, with losses typically in the 5--10\% range.
+
+This recurring sensitivity suggests that even best-in-class systems depend heavily on prompt form and phrasing. While this fragility originates from a much higher baseline compared to open-weight and local models, it reinforces the need to evaluate not just raw capability, but also consistency under prompt variation.
+
+The next chapter (Chapter~\ref{ch:conclusie}) will provide final answers to the research question and supporting sub-questions based on the full body of benchmark results.

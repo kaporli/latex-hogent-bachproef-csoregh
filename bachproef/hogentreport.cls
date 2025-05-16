@@ -252,6 +252,32 @@
 \RequirePackage{xspace}
 \RequirePackage{csquotes}
 
+% Codeblocks CUSTOM
+% \RequirePackage{xcolor}
+% \RequirePackage{listings}
+% \RequirePackage{minted}
+\RequirePackage{pifont}
+\newcommand{\checkYes}{\textcolor{ForestGreen}{\ding{51}}} % ✓
+\newcommand{\checkNo}{\textcolor{BrickRed}{\ding{55}}}     % ✗
+\RequirePackage{siunitx}
+\sisetup{detect-all}
+\RequirePackage[nomain,acronym]{glossaries}
+\setacronymstyle{long-short}
+\glsdisablehyper
+\makeglossaries 
+\AtEndOfClass{%
+  \RequirePackage{etoolbox}
+  \AtBeginDocument{%
+    \pretocmd{\chapter}{\glsresetall}{}{}
+  }
+}
+\RequirePackage{parskip}
+\RequirePackage{float}
+\RequirePackage{fancyvrb}
+\RequirePackage{fvextra}
+\RequirePackage{dirtree}
+\RequirePackage[edges]{forest}
+
 %% Accent colors:
 \definecolor{hogent-darkgreen}{RGB}{22,176,165}
 \definecolor{hogent-pink}{RGB}{241,157,160}

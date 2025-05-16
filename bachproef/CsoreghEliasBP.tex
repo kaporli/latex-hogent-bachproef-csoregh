@@ -21,7 +21,7 @@
 %% \usepackage[chapter]{minted}
 %% If you compile with the make_thesis.{bat,sh} script, use the following
 %% import instead:
-\usepackage[chapter,outputdir=../output]{minted}
+\usepackage[chapter]{minted}
 \usemintedstyle{solarized-light}
 
 %% Formatting for minted environments.
@@ -50,8 +50,11 @@
 %%---------- Document metadata -------------------------------------------------
 % TODO: Replace this with your own information
 \author{Elias Csoregh}
-\supervisor{Mevr. M. Van Audenrode}
-\cosupervisor{Dhr. A. Leflon}
+\supervisor{\IfLanguageName{dutch}{Mevr. M. Van Audenrode}{Ms. M. Van Audenrode}}
+\cosupervisor{\IfLanguageName{dutch}{Dhr. A. Leflon}{Mr. A. Leflon}}
+
+% \supervisor{Mevr. M. Van Audenrode}
+% \cosupervisor{Dhr. A. Leflon}
 \title[]%
     {Self-Hosted LLMs for Secure Coding in Enterprise Environments}
 \academicyear{\advance\year by -1 \the\year--\advance\year by 1 \the\year}
@@ -73,8 +76,67 @@
 
 \renewcommand{\arraystretch}{1.2}
 
+\usepackage{tikz}
+\usetikzlibrary{shapes, shadows.blur, shapes.multipart}
+\usepackage[edges]{forest}
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+\usetikzlibrary{shapes, backgrounds, fit, calc, positioning, shadows.blur, trees}
+
+\tikzset{
+  folder/.pic={
+    \filldraw[draw=black, top color=blue!20, bottom color=blue!10]
+      (-0.3,0.2) rectangle ++(0.6,-0.2);
+    \filldraw[draw=black, top color=blue!50, bottom color=blue!30]
+      (-0.5,-0.3) rectangle (0.5,0.3);
+  },
+}
+
+\forestset{
+  declare toks={pic me}{},
+  pic dir tree/.style={
+    for tree={
+      font=\ttfamily,
+      grow'=0,
+      child anchor=west,
+      parent anchor=south,
+      anchor=west,
+      calign=first,
+      inner sep=2pt,
+      l=10pt,
+      edge path={
+        \noexpand\path [draw, \forestoption{edge}]
+        (!u.parent anchor) -- +(5pt,0) |- (.child anchor)\forestoption{edge label};
+      },
+      before typesetting nodes={
+        if n=1
+          {insert before={[,phantom]}}
+          {}
+      },
+      fit=band,
+      tikz+/.code={
+        \ifnum\tikzlevel>0
+            \pic at (0,0) {folder};
+        \fi
+        },
+    }
+  }
+}
+
+
+
 %% Content starts here.
 \begin{document}
+
+\newacronym{AI}{AI}{Artificial Intelligence}
+\newacronym{LLM}{LLM}{Large Language Model}
+\newacronym{LM}{LM}{Language Model}
+\newacronym{IDE}{IDE}{Integrated Development Environment}
+\newacronym{NL}{NL}{Natural Language}
+\newacronym{NLP}{NLP}{Natural Language Processing}
+\newacronym{MBPP}{MBPP}{Mostly Basic Programming Problems}
+\newacronym{APPS}{APPS}{Automated Programming Progress Standard}
+\newacronym{CLI}{CLI}{Command Line Interface}
 
 %---------- Front matter -------------------------------------------------------
 
@@ -83,11 +145,11 @@
 \hypersetup{pageanchor=false} %% Disable page numbering references
 %% Render a Dutch outer title page if the main language is English
 \IfLanguageName{english}{%
-    %% If necessary, information can be changed here
-    \degreesought{Professionele Bachelor toegepaste informatica}%
-    \begin{otherlanguage}{dutch}%
-       \maketitle%
-    \end{otherlanguage}%
+	%% If necessary, information can be changed here
+	\degreesought{Professionele Bachelor toegepaste informatica}%
+	\begin{otherlanguage}{dutch}%
+		\maketitle%
+	\end{otherlanguage}%
 }{}
 
 %% Generates title page content
@@ -134,6 +196,7 @@
 \input{standvanzaken}
 \input{methodologie}
 
+
 % Voeg hier je eigen hoofdstukken toe die de ``corpus'' van je bachelorproef
 % vormen. De structuur en titels hangen af van je eigen onderzoek. Je kan bv.
 % elke fase in je onderzoek in een apart hoofdstuk bespreken.
@@ -141,6 +204,8 @@
 %\input{...}
 %\input{...}
 %...
+\input{poc}
+\input{results}
 
 \input{conclusie}
 
@@ -186,5 +251,10 @@ innovatie kan worden bevorderd zonder in te boeten op de veiligheid van gevoelig
 
 \setlength\bibitemsep{2pt} %% Add Some space between the bibliograpy entries
 \printbibliography[heading=bibintoc]
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Glossary}
+\printglossary[type=\acronymtype, title=Glossary, toctitle=Acronyms]
 
 \end{document}
