@@ -277,6 +277,7 @@
 \RequirePackage{fvextra}
 \RequirePackage{dirtree}
 \RequirePackage[edges]{forest}
+\RequirePackage{seqsplit}
 
 %% Accent colors:
 \definecolor{hogent-darkgreen}{RGB}{22,176,165}

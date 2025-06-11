@@ -28,6 +28,12 @@
 \RequirePackage{wrapfig} % Allows wrapping text around tables and figures
 \RequirePackage[export]{adjustbox}
 
+% CUSTOM
+\RequirePackage{enumitem}
+\RequirePackage{parskip}
+
+\newcommand{\figcite}[1]{\textsuperscript{\ref{#1}}}
+
 %%============================================================================
 %% Process options
 %%============================================================================

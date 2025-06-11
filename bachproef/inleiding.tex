@@ -6,7 +6,7 @@
 
 As \gls{AI} rapidly advances, \gls{AI}-powered coding assistants have become increasingly prevalent due to their capacity to significantly enhance productivity, efficiency, and developer workflows. Notably, transformer-based \glspl{LLM}, such as OpenAI's Codex and GitHub Copilot, have demonstrated a remarkable ability to generate code, interpret natural language prompts, and substantially accelerate coding tasks. Developers leveraging these tools report substantial productivity gains, including reduced mental load from repetitive coding tasks and enhanced workflow efficiency \autocite{Microsoft2023Copilot}. Despite these benefits, the widespread adoption of cloud-based \gls{AI} coding assistants by enterprises has been constrained primarily due to data security and privacy concerns.
 
-Recent incidents have highlighted the critical risks associated with cloud-hosted \gls{AI} assistants. Samsung's 2023 decision to prohibit employee use of cloud-based \gls{AI} tools arose after a sensitive internal source code leak occurred via an external \gls{AI} model, highlighting vulnerabilities in how user data is stored and managed externally \autocite{Park2023Samsung}. Similarly, major financial institutions like JPMorgan Chase and Goldman Sachs have proactively restricted the usage of such cloud-based services to mitigate regulatory and confidentiality risks \autocite{Kessel2024}. These incidents underscore the potential for inadvertent data exposure, compliance violations, and loss of intellectual property control associated with external \gls{AI} deployments.
+Recent incidents have highlighted the critical risks associated with cloud-hosted \gls{AI} assistants. Samsung's 2023 decision to prohibit employee use of cloud-based \gls{AI} tools arose after a sensitive internal source code leak occurred via an external \gls{AI} model, highlighting vulnerabilities in how user data is stored and managed externally \autocite{Park2023Samsung}. Similarly, major financial institutions like JPMorgan Chase and Goldman Sachs have proactively restricted the usage of such cloud-based services to mitigate regulatory and confidentiality risks \autocite{Kessel2024}. These incidents illustrate the potential for inadvertent data exposure, compliance violations, and loss of intellectual property control associated with external \gls{AI} deployments.
 
 In light of these pressing concerns, one potential solution for enterprises is the deployment of self-hosted \glspl{LLM} for secure coding assistance, running these models internally within their infrastructure. Self-hosted \glspl{LLM} could enhance data privacy and compliance by ensuring operations remain entirely within the organization's environment, eliminating reliance on external services. However, this approach introduces new complexities, including integration challenges, computational resource demands, and ensuring secure, reliable operations within enterprise infrastructure.
 
@@ -19,13 +19,14 @@ A central concern driving hesitation among enterprises regarding cloud-based \gl
 \label{sec:onderzoeksvraag}
 
 \begin{quote}
-	\textit{Which self-hosted \glspl{LLM} offer the best support for coding tasks while minimizing data leakage risks?}
+    \textit{Can modern self-hosted LLMs serve as viable, secure alternatives to proprietary cloud-based \gls{AI} models for code generation?}
 \end{quote}
 \label{rq:main}
 
 To address this overarching question, we formulated the following \textbf{research sub-questions}:
 
 \begin{enumerate}[label=SQ\arabic*., ref=SQ\arabic*]
+    \item \label{sq:best-choice} Which self-hosted \glspl{LLM} offer the best support for coding tasks while minimizing data leakage risks?
 	\item \label{sq:secure-dev} Can self-hosted \glspl{LLM} reliably assist in secure software development without introducing vulnerabilities?
 	\item \label{sq:performance} How does the performance of self-hosted \glspl{LLM} compare to cloud-based \gls{AI} tools in coding tasks?
 	\item \label{sq:deployment} What are the deployment challenges and resource requirements of running \glspl{LLM} locally?
@@ -35,7 +36,8 @@ To address this overarching question, we formulated the following \textbf{resear
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-The central aim of this research is a comprehensive examination and detailed evaluation of locally-hosted \glspl{LLM} tailored for coding assistance. It rigorously assesses their performance, resilience, and appropriateness relative to cloud-based alternatives. The study focuses explicitly on the capabilities of these self-managed models in executing programming tasks, particularly highlighting use-cases involving critical data confidentiality or proprietary information. Utilizing systematic benchmarking and a comparative methodology, this research seeks to deliver actionable insights into the strengths, constraints, and operational factors associated with adopting local machine learning models. Consequently, the outcomes of this extensive analysis will equip both businesses and individual users with essential guidance, facilitating a clear understanding of whether maintaining in-house machine learning models aligns effectively with their strategic objectives concerning data protection, security considerations, and workflow efficiency.
+The central aim of this research is a comprehensive examination and detailed evaluation of locally-hosted \glspl{LLM} tailored for coding assistance. It rigorously assesses their performance, resilience, and appropriateness relative to cloud-based alternatives. The study emphasizes model performance, feasibility, and limitations in resource-constrained local environments. This analysis provides practical insights into the viability of adopting self-hosted solutions as an alternative to cloud-based systems, focusing on trade-offs in accuracy, responsiveness, and infrastructure requirements.
+
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
 
@@ -45,12 +47,12 @@ The central aim of this research is a comprehensive examination and detailed eva
 
 The remainder of this bachelor's thesis is structured as follows:
 
-Chapter~\ref{ch:stand-van-zaken} provides an overview of the current state of research in the field, based on a literature review.
-
-Chapter~\ref{ch:methodologie} explains the methodology and discusses the research techniques used to address the research questions.
-
-Chapter~\ref{ch:proof-of-concept} justifies the approach of research and provides a comprohensive guide to reproduce the results found in the results Chapter~\ref{ch:results}.
+\begin{itemize}
+	\item \textbf{Chapter~\ref{ch:methodologie}} describes the overall research design, the evaluation pipeline, benchmark selection, and the metrics used to answer our research questions.
+	\item \textbf{Chapter~\ref{ch:stand-van-zaken}} surveys the evolution of \gls{AI}-powered code assistance, highlights security and privacy concerns with cloud-based tools, and reviews key benchmarks for code generation.
+	\item \textbf{Chapter~\ref{ch:proof-of-concept}} introduces the proof of concept, which supports the methodological choices and lays the groundwork for the subsequent evaluation.
+	\item \textbf{Chapter~\ref{ch:results}} presents the results of the empirical evaluation and offers a comparative view to contextualize the performance of the selected models.
+	\item \textbf{Chapter~\ref{ch:conclusie}} synthesizes these results, revisits our research questions, discusses practical implications and best practices for deploying self-hosted \glspl{LLM}, and outlines directions for future work.
+\end{itemize}
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
-
-Finally, Chapter~\ref{ch:conclusie} presents the conclusion, answering the overarching research question and sub-questions, and also outlines avenues for future research within this domain.

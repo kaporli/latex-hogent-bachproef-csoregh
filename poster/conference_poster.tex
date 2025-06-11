@@ -4,83 +4,112 @@
 % Gebaseerd op document class `a0poster' door Gerlinde Kettl en Matthias Weiser
 % Aangepast voor gebruik aan HOGENT door Jens Buysse en Bert Van Vreckem
 
-\documentclass[a0,portrait]{hogent-poster}
+\documentclass[a0,portrait,english]{hogent-poster}
+
+\setlength{\parskip}{0.5\baselineskip}
 
 % Info over de opleiding
 \course{Bachelorproef}
 \studyprogramme{toegepaste informatica}
-\academicyear{2022-2023}
+\academicyear{2024-2025}
 \institution{Hogeschool Gent, Valentin Vaerwyckweg 1, 9000 Gent}
 
 % Info over de bachelorproef
-\title{Titel van uw bachelorproef}
-\subtitle{Ondertitel (eventueel)}
-\author{Voornaam Naam}
-\email{voornaam.familienaam@student.hogent.be}
-\supervisor{Voornaam Naam}
-\cosupervisor{Voornaam Naam (Bedrijf)}
+\title{Self-Hosted LLMs for Secure Coding in Enterprise Environments}
+%\subtitle{Ondertitel (eventueel)}
+\author{Elias Csoregh}
+\email{elias.csoregh@student.hogent.be}
+\supervisor{Martine Van Audenrode}
+\cosupervisor{Antoine Leflon (Groupe Service France)}
 
 % Indien ingevuld, wordt deze informatie toegevoegd aan het einde van de
 % abstract. Zet in commentaar als je dit niet wilt.
-\specialisation{Systeem- en Netwerkbeheer}
-\keywords{Lambda-calculus, Scheme}
-\projectrepo{https://github.com/user/repo}
+\specialisation{AI \& Data Engineering}
+\keywords{AI, LLM, NLP, NL}
+%\projectrepo{https://github.com/kaporli/latex-hogent-bachproef-csoregh}
 
 \begin{document}
+
+\makeatletter
+\patchcmd{\@maketitle}
+{Promotor:}
+{Supervisor:}
+{}{}
+
+\patchcmd{\@maketitle}
+{Co-promotor:}
+{Co-Supervisor:}
+{}{}
+\makeatother
 
 \maketitle
 
 \begin{abstract}
-It's only a model.
-You don't vote for kings. Who's that then? We found them. Ni! Ni! Ni! Ni!
-The nose? On second thoughts, let's not go there. It is a silly place. Bloody Peasant! And the hat. She's a witch! Where'd you get the coconuts?
+	This study benchmarks self-hosted Large Language Models (LLMs) to evaluate their viability for secure code generation in enterprise environments. We empirically tested sub-7B open-weight models on HumanEval and MBPP (including augmented variants), focusing on functional correctness, prompt stability, and generalizability. Results were contextualized using publicly reported scores from larger open-weight and cloud-based models. Among those manually tested, Deepseek-Coder-7B and Qwen2.5-Coder-7B emerged as competitive alternatives, offering strong performance without reliance on external services.
 \end{abstract}
 
 \begin{multicols}{2} % This is how many columns your poster will be broken into, a portrait poster is generally split into 2 columns
 
-\section{Introductie}
+	\section{Introduction}
+	The widespread adoption of AI coding assistants like ChatGPT and GitHub Copilot has enhanced developer productivity but introduced significant risks concerning data privacy and intellectual property. Enterprises handling sensitive data require solutions that avoid external cloud infrastructures. This thesis investigates if self-hosted LLMs can securely and effectively replace proprietary cloud-based services.
 
-Be quiet! Found them? In Mercia?! The coconut's tropical! But you are dressed as one… Well, what do you want? Knights of Ni, we are but simple travelers who seek the enchanter who lives beyond these woods.
+	The research addresses the primary question:
 
-Well, what do you want? It's only a model. Camelot! We found them. We shall say `Ni' again to you, if you do not appease us.
+	\begin{quote}
+		\textit{Can modern self-hosted LLMs serve as viable, secure alternatives to proprietary cloud-based AI models for code generation?}
+	\end{quote}
+	\label{rq:main}
 
-The nose? Shut up! Burn her! I am your king. You don't vote for kings.
+	This question further divides into the following research sub-questions:
 
-You can't expect to wield supreme power just `cause some watery tart threw a sword at you! Well, we did do the nose. I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave before I am forced to taunt you a second time!
+	\begin{enumerate}[label=SQ\arabic*., ref=SQ\arabic*]
+		\item \label{sq:best-choice} Which self-hosted LLMs offer the best support for coding tasks while minimizing data leakage risks?
+		\item \label{sq:secure-dev} Can self-hosted LLMs reliably assist in secure software development without introducing vulnerabilities?
+		\item \label{sq:performance} How does the performance of self-hosted LLMs compare to cloud-based AI tools in coding tasks?
+		\item \label{sq:deployment} What are the deployment challenges and resource requirements of running LLMs locally?
+		\item \label{sq:best-practices} What best practices should organizations follow when integrating self-hosted AI coding assistants?
+	\end{enumerate}
 
-Why do you think that she is a witch? We want a shrubbery!! I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave before I am forced to taunt you a second time!
+	\section{Methods}
+	Self-hosted open-weight models (≤7B) were evaluated in a controlled GPU-enabled Docker environment. Benchmarks included HumanEval, MBPP, and their augmented variants (HumanEval+, MBPP+). We assessed functional correctness, efficiency, and consistency under varied prompts. Results were contextualized against published scores from larger open-weight and cloud-based models from the EvalPlus leaderboard.
 
-\section{Experimenten}
+	\section{Results}
+	Benchmarking revealed clear performance differences across model categories. On the standard MBPP and HumanEval benchmarks, proprietary cloud models like GPT-4 Turbo achieved the highest scores, followed by large open-weight models such as CodeLlama-34B-Instruct and Deepseek-Coder-33B. Notably, self-hosted models like Deepseek-Coder-7B and Qwen2.5-Coder-7B closely approached these results. Qwen2.5-Coder-7B led among the sub-7B models on MBPP, while Deepseek-Coder-7B demonstrated strong consistency across both tasks (1).
 
-A newt? Camelot! Why? No, no, no! Yes, yes. A bit. But she's got a wart.
+	To evaluate robustness, we compared results on the original benchmarks to their augmented versions (MBPP+ and HumanEval+), which introduce minor variations in task phrasing. Qwen2.5 maintained stable performance across both sets, whereas Gemini and similar models showed notable drops, suggesting a tendency to overfit to prompt wording. These findings highlight that certain self-hosted models can deliver reliable and secure code generation even under varied input conditions (2).
 
-Shut up! I dunno. Must be a king. Who's that then? Look, my liege! On second thoughts, let's not go there. It is a silly place.
+	\begin{center}
+		\begin{minipage}[t]{0.48\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{graphics/scatter_mbpp_vs_humaneval.png}
+			\captionof{figure}{MBPP vs HumanEval Pass@1 scores}
+			\label{fig:scatter-scores}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.48\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{graphics/scatter_deltas_mbpp_vs_humaneval.png}
+			\captionof{figure}{Base vs augmented Pass@1 score deltas}
+			\label{fig:scatter-deltas}
+		\end{minipage}
+	\end{center}
 
-Shut up! Will you shut up?! No, no, no! Yes, yes. A bit. But she's got a wart. He hasn't got shit all over him. It's only a model. It's only a model.
+	\section{Conclusions}
+	The evaluation confirms that modern self-hosted LLMs can serve as viable, secure alternatives to proprietary cloud-based AI models for code generation. Their performance, privacy benefits, and deployment feasibility collectively support an affirmative answer to the central research question.
 
-Bring her forward! I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave 
+	\textbf{Key Findings:}
+	\begin{enumerate}[label=SQ\arabic*., ref=SQ\arabic*]
+		\item Qwen2.5 achieved top MBPP scores, while Deepseek delivered more consistent results across all benchmarks.
+		\item Both models produced reliable, secure code, though oversight remains necessary to catch edge-case vulnerabilities.
+		\item Performance approached that of leading cloud models, though a noticeable gap remains in complex tasks.
+		\item Local deployment required capable GPUs and technical expertise, but proved sustainable and reproducible.
+		\item Effective use requires reproducible setups and preserving human oversight and auditability throughout deployment.
+	\end{enumerate}
 
-\section{Sectie met figuur}
+	Self-hosted LLMs have matured into practical tools for privacy-conscious enterprises, offering robust performance without relying on external providers.
 
-De {\LaTeX} figure-omgeving bepaalt zelf waar een afbeelding komt en dat is meestal niet op de plek in de tekst waar de figure-omgeving gedefinieerd wordt. Als je wilt forceren dat afbeeldingen toch in de flow van de tekst blijven, dan kan je dat zoals hieronder:
-
-\begin{center}
-  \captionsetup{type=figure}
-  \includegraphics[width=1.0\linewidth]{grail}
-  \captionof{figure}{He hasn't got shit all over him. The nose? Where'd you get the coconuts? What do you mean? We shall say `Ni' again to you, if you do not appease us}
-\end{center}
-
-Let er wel op dat dit tot problemen met bladschikking kan leiden.
-
-\section{Conclusies}
-
-Don't underestimate the Force. Oh God, my uncle. How am I ever gonna explain this? I suggest you try it again, Luke. This time, let go your conscious self and act on instinct. Don't be too proud of this technological terror you've constructed. The ability to destroy a planet is insignificant next to the power of the Force.
-
-\section{Toekomstig onderzoek}
-
-I care. So, what do you think of her, Han? No! Alderaan is peaceful. We have no weapons. You can't possibly… I have traced the Rebel spies to her. Now she is my only link to finding their secret base.
-
-Kid, I've flown from one side of this galaxy to the other. I've seen a lot of strange stuff, but I've never seen anything to make me believe there's one all-powerful Force controlling everything. There's no mystical energy field that controls my destiny. It's all a lot of simple tricks and nonsense. You are a part of the Rebel Alliance and a traitor! Take her away! 
+	\section{Future Research}
+	Future work should explore LoRA-based fine-tuning for task-specific adaptation, hybrid local–cloud deployment strategies, and safety-focused evaluation protocols. Self-hosted models have evolved from a theoretical concept into a practical, deployable alternative to cloud-based solutions.
 
 \end{multicols}
 \end{document}
